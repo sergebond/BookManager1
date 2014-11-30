@@ -12,15 +12,18 @@
         <tr>
             <th>Name</th>
             <th>Genre</th>
+            <th>&nbsp;</th>
         </tr>
         <c:forEach items = "${books}" var = "book">
             <tr>
                 <td>${book.name}</td>
                 <td>${book.genre}<td>
+                <td><a href="deleteBook/${book.iD}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
   </c:if>
 </div>
+<a href="addBook">Add Book</a>
 </body>
 </html>
