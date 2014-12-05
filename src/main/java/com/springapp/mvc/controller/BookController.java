@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "addBook", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()")
     public String addBook(Model model) {
         model.addAttribute("book",new Book());
 
@@ -44,6 +46,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "addBook", method = RequestMethod.POST)
+    @PreAuthorize("isAuthenticated()")
     public String addBook(@ModelAttribute("book") Book book, BindingResult bindingResult){
         this.bookValidator.validate(book, bindingResult);
         if(bindingResult.hasErrors()){
@@ -55,6 +58,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "deleteBook/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('admin')")
     public String deleteBook(@PathVariable Integer id){
         this.bookRepository.removeBook(id);
 
